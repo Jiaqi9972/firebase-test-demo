@@ -20,17 +20,28 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
+## Problem
 
-To learn more about Next.js, take a look at the following resources:
+I used `signInWithEmailAndPassword` from `firebase/auth` to log in. The `print current user info` button can print the user info in the console. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The rule I used is:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```
+rules_version = '2';
 
-## Deploy on Vercel
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /test/{document} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+I think it means if I logged in, the request will be allowed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+But the request always return: `@firebase/firestore: Firestore (10.13.1): GrpcConnection RPC 'Write' stream 0x8118b5fc error. Code: 7 Message: 7 PERMISSION_DENIED: Missing or insufficient permissions.`
+
+If I changed it to `if request.auth == null`, it works. 
+
+Can you help me fix this? I don't know the problem is on my code or the firebase settings. Thank you!
