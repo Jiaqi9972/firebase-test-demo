@@ -25,7 +25,7 @@ export default function SignUp() {
   return (
     <div>
       <div className="border">
-        <h2>Login</h2>
+        <h2>Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email">Email:</label>
@@ -35,6 +35,7 @@ export default function SignUp() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="border"
             />
           </div>
           <div>
@@ -45,6 +46,7 @@ export default function SignUp() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className="border"
             />
           </div>
           <button type="submit" className="border">
